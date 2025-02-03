@@ -24,13 +24,8 @@ public final class InventoryAccess extends JavaPlugin {
         );
     }
 
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
-    }
-
     public void HandleChestSearch(Player player, String item_name) {
-        Collection<Chest> chests = this.GetChestsAroundPlayer(player);
+        Collection<Chest> chests = Helper.GetChestsAroundPlayer(player);
         for(Chest chest : chests) {
             Inventory inventory = chest.getInventory();
 
@@ -44,35 +39,5 @@ public final class InventoryAccess extends JavaPlugin {
             }
         }
         player.sendMessage(Component.text("No chests in range containing item: ").append(Component.text(item_name)));
-    }
-
-    public Collection<Chest> GetChestsAroundPlayer(Player player) {
-        Collection<Chest> chests = new HashSet<>();
-
-        for (Chunk chunk : this.getChunksAroundPlayer(player)) {
-            for (BlockState state : chunk.getTileEntities()) { // Get tile entities (containers, etc.)
-                if (state instanceof Chest chest) {
-                    chests.add(chest);
-                }
-            }
-        }
-
-        return chests;
-    }
-
-    private Collection<Chunk> getChunksAroundPlayer(Player player) {
-        int[] offset = {-1,0,1};
-
-        World world = player.getWorld();
-        int baseX = player.getLocation().getChunk().getX();
-        int baseZ = player.getLocation().getChunk().getZ();
-
-        Collection<Chunk> chunksAroundPlayer = new HashSet<>();
-        for(int x : offset) {
-            for(int z : offset) {
-                Chunk chunk = world.getChunkAt(baseX + x, baseZ + z);
-                chunksAroundPlayer.add(chunk);
-            }
-        } return chunksAroundPlayer;
     }
 }
