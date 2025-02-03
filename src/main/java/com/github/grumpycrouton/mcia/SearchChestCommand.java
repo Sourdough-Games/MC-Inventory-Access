@@ -39,7 +39,7 @@ public class SearchChestCommand implements BasicCommand {
 
     @Override
     public @Nullable String permission() {
-        return "inventoryaccess.searchchest";
+        return "inventoryaccess.searchchests";
     }
 
     @Override

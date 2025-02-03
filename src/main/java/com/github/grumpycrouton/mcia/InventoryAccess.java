@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.*;
 import org.bukkit.block.*;
 import java.util.Collection;
+import java.util.Arrays;
 import java.util.HashSet;
 import org.bukkit.inventory.*;
 
@@ -19,7 +20,7 @@ public final class InventoryAccess extends JavaPlugin {
     @Override
     public void onEnable() {
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
-                event -> event.registrar().register("searchchest", new SearchChestCommand(this))
+                event -> event.registrar().register("searchchest", Arrays.asList("sc"), new SearchChestCommand(this))
         );
     }
 
@@ -29,10 +30,7 @@ public final class InventoryAccess extends JavaPlugin {
     }
 
     public void HandleChestSearch(Player player, String item_name) {
-        player.sendMessage(Component.text("Handling chest search for item: ").append(Component.text(item_name)));
-
         Collection<Chest> chests = this.GetChestsAroundPlayer(player);
-        player.sendMessage(Component.text("Chests found: ").append(Component.text(chests.size())));
         for(Chest chest : chests) {
             Inventory inventory = chest.getInventory();
 
@@ -45,6 +43,7 @@ public final class InventoryAccess extends JavaPlugin {
                 }
             }
         }
+        player.sendMessage(Component.text("No chests in range containing item: ").append(Component.text(item_name)));
     }
 
     public Collection<Chest> GetChestsAroundPlayer(Player player) {
