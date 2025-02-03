@@ -1,0 +1,9 @@
+name: InventoryAccess
+version: '${version}'
+main: com.github.grumpycrouton.mcia.InventoryAccess
+api-version: '1.21'
+commands:
+  searchchest:
+    description: Searches nearby chests for a specific item
+    usage: /searchchest <Item>
+    permission: inventoryaccess.searchchest
